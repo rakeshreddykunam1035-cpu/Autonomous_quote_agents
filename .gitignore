@@ -10,9 +10,6 @@ venv/
 .venv/
 env/
 
-# Trained models (large binary files -- regenerate via agent1/agent2 training scripts)
-models/*.joblib
-
 # Large raw data (optional -- uncomment if you don't want the CSV tracked in git)
 # data/*.csv
 

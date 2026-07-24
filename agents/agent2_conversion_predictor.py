@@ -48,6 +48,7 @@ def train(save: bool = True):
     print(classification_report(y_test, preds))
 
     if save:
+        os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
         joblib.dump({"model": clf, "feature_columns": list(feats_plus.columns)}, MODEL_PATH)
         print(f"Saved model -> {MODEL_PATH}")
 
@@ -55,8 +56,18 @@ def train(save: bool = True):
 
 
 def load():
-    bundle = joblib.load(MODEL_PATH)
-    return bundle["model"], bundle["feature_columns"]
+    """
+    Load the saved model. If it's missing, or was pickled by a different
+    numpy/scikit-learn version than what's installed here (a real risk when
+    deploying to a fresh environment like Streamlit Cloud), fall back to
+    training fresh in this environment instead of crashing.
+    """
+    try:
+        bundle = joblib.load(MODEL_PATH)
+        return bundle["model"], bundle["feature_columns"]
+    except Exception as e:
+        print(f"[agent2] Could not load saved model ({e}); training fresh instead.")
+        return train(save=True)
 
 
 def run(feature_row: pd.DataFrame, risk_tier: str, model=None, feature_columns=None) -> dict:

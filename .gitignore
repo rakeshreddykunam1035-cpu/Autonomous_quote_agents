@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.Python
+*.egg-info/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Trained models (large binary files -- regenerate via agent1/agent2 training scripts)
+models/*.joblib
+
+# Large raw data (optional -- uncomment if you don't want the CSV tracked in git)
+# data/*.csv
+
+# Streamlit
+.streamlit/
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
